@@ -9,19 +9,19 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Team Members: 
+### Team Members: 
 Eric Friesth (Project Coordinator), Aashwin Lamsal, Ethan Wanlass
 
-## Data Source: 
+### Data Source: 
 https://www.kaggle.com/jameslko/gun-violence-data 
 
-## Dataset Overview: 
+### Dataset Overview: 
 This dataset is a collection of incidences where an act of gun violence ocurred in the U.S. from 2013-2018. 
 
-## Background: 
+### Background: 
 There are 260,000 records in this dataset with 29 attributes. These attributes are different descriptors of the gun violence incident, such as the age of the participant (the shooter) and the number of people killed. There is a lot of categorical data that will need to be cleaned by being reformatted i.e. split them into separate columns.
 
-## Plan for Exploratory Analysis:
+### Plan for Exploratory Analysis:
 As for exloring this data, we are interested to see if these participants (shooters) fit specific demographics by looking into the distributions of the participant's attributes. 
 
 
