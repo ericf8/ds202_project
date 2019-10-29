@@ -1,6 +1,6 @@
 ---
-title: "ds202_proposal"
-author: "Eric Friesth"
+title: "Project Proposal"
+author: "Eric Friesth, Aashwin Lamsal, Ethan Wanlass"
 date: "10/29/2019"
 output: html_document
 ---
