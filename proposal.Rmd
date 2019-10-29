@@ -30,10 +30,12 @@ into separate columns.
 As for exloratory analysis, we are interested to see if these participants
 (shooters) fit specific demographics by looking into the distributions of the
 participant's attribute. We would also like to know how these attributes 
+correlate or effect one another. It would be nice to discover some sort of 
+insight into how we can predict future incidences given certain attributes.
 
-
-
-
+We plan on finding these answers by visualizing the data using distributions of
+each attribute with histograms and bar charts as well as compare attributes
+against one another using line, bar, and scatter plots. 
 
 
 
