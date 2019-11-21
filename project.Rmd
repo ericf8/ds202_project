@@ -10,8 +10,26 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 ## Gun Violence incidences recorded in the US from 2013 to 2018
 ```{r}
-
+#Initial cleaning was done using MS Excel, we dropped columns that we weren't planning to use (Address, house district, senate district, part2-5_age) and removed rows with empty cells.
 data = read.csv('gun-violence-202.csv')
 head(data)
+str(data)
+
+
+#Changing data type for date from factor to date
+
+data$date <- as.Date(data$date, format = "%m/%d/%Y")
+#head(data)
+#Date format is in YYYY-MM-DD
+
+#Changing the data type for age from factor to int
+data$part1_age <- as.integer(data$part1_age)
+#head(data)
+#str(data)
+
+#Next, we drop rows with NA values using na.omit
+
+data_clean <- na.omit(data)
+head(data_clean, 10)
 
 ```
