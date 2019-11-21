@@ -1,0 +1,15 @@
+---
+title: "project"
+author: "Eric Friesth"
+date: "11/21/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r}
+
+data = read.csv('gun-violence-202.csv')
+
+```
