@@ -36,6 +36,18 @@ data$part1_age <- as.integer(data$part1_age)
 data_clean <- na.omit(data)
 head(data_clean, 10)
 
+# Finally, we noticed in our two factor variables, state and city_or_county, had levels "" that had to be removed as they were unnecessary
+
+# We did this using the following code to drop levels
+
+data_clean$state[data_clean$state == ""] = NA
+data_clean$state = droplevels(data_clean$state)
+str(data_clean)
+
+data_clean$city_or_county[data_clean$city_or_county == ""] = NA
+data_clean$city_or_county = droplevels(data_clean$city_or_county)
+str(data_clean)
+
 ```
 
 ### Data Visualization
@@ -43,12 +55,6 @@ head(data_clean, 10)
 ```{r}
 
 library(tidyverse)
-
-table(data_clean$state, data_clean$n_killed)
-
-data_clean = subset(data_clean, data_clean$state != "")
-str(data_clean)
-
 
 ggplot(data_clean, aes(x = state, y = sum(n_killed))) + geom_bar(stat = "identity") + theme(axis.text.x = element_text(angle=90, hjust=1))
 
