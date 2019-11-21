@@ -63,7 +63,7 @@ library(RColorBrewer)
 
 map_bounds = c(left = -125, bottom = 25, right = -65, top = 50)
 
-data_clean.map = get_stamenmap(map_bounds, zoom = 15, maptype = "toner-lite")
+data_clean.map = get_stamenmap(map_bounds, zoom = 9, maptype = "toner-lite")
 
 data_clean.map = ggmap(data_clean.map, extent = "device", legend = "none")
 
