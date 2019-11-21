@@ -8,7 +8,11 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
 ## Gun Violence incidences recorded in the US from 2013 to 2018
+
+### Data Cleaning
+
 ```{r}
 #Initial cleaning was done using MS Excel, we dropped columns that we weren't planning to use (Address, house district, senate district, part2-5_age) and removed rows with empty cells.
 data = read.csv('gun-violence-202.csv')
@@ -33,3 +37,41 @@ data_clean <- na.omit(data)
 head(data_clean, 10)
 
 ```
+
+### Data Visualization
+
+```{r}
+
+library(tidyverse)
+
+table(data_clean$state, data_clean$n_killed)
+
+data_clean = subset(data_clean, data_clean$state != "")
+str(data_clean)
+
+
+ggplot(data_clean, aes(x = state, y = sum(n_killed))) + geom_bar(stat = "identity") + theme(axis.text.x = element_text(angle=90, hjust=1))
+
+ggplot(data_clean, aes(x = part1_age, y = sum(n_killed), bins = 10)) + geom_histogram(stat = "identity")
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
