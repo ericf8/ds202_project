@@ -8,8 +8,10 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+## Gun Violence incidences recorded in the US from 2013 to 2018
 ```{r}
 
 data = read.csv('gun-violence-202.csv')
+head(data)
 
 ```
