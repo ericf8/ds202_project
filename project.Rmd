@@ -55,6 +55,15 @@ str(data_clean)
 ```{r}
 
 library(tidyverse)
+library(ggmap)
+library(sf)
+library(mapview)
+
+locations_sf <- st_as_sf(data_clean, coords = c("longitude", "latitude"), crs = 4326)
+mapview(locations_sf)
+
+
+
 
 ggplot(data_clean, aes(x = state, y = sum(n_killed))) + geom_bar(stat = "identity") + theme(axis.text.x = element_text(angle=90, hjust=1))
 
