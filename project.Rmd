@@ -63,7 +63,7 @@ library(RColorBrewer)
 
 map_bounds = c(left = -125, bottom = 25, right = -65, top = 50)
 
-data_clean.map = get_stamenmap(map_bounds, zoom = 9, maptype = "toner-lite")
+data_clean.map = get_stamenmap(map_bounds, zoom = 7, maptype = "toner-lite")
 
 data_clean.map = ggmap(data_clean.map, extent = "device", legend = "none")
 
@@ -74,7 +74,7 @@ data_clean.map = data_clean.map + scale_fill_gradientn(colours = rev(brewer.pal(
 
 data_clean.map = data_clean.map + theme_bw()
 
-ggsave(filename = "D:\\Documents\\ds202_project\\data_clean.png")
+ggsave(filename = "D:\\Documents\\ds202_project\\data_clean1.png")
 
 
 
