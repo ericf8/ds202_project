@@ -60,7 +60,7 @@ library(sf)
 library(mapview)
 library(RColorBrewer)
 
-
+#Creation of our continental US Map
 map_bounds = c(left = -125, bottom = 25, right = -65, top = 50)
 
 data_clean.map = get_stamenmap(map_bounds, zoom = 7, maptype = "toner-lite")
@@ -80,10 +80,9 @@ ggsave(filename = "D:\\Documents\\ds202_project\\data_clean1.png")
 
 
 
-ggplot(data_clean, aes(x = state, y = sum(n_killed))) + geom_bar(stat = "identity") + theme(axis.text.x = element_text(angle=90, hjust=1))
+ggplot(data_clean, aes(x = state, y = sum(n_killed))) + geom_bar(stat = "identity") + theme(axis.text.x = element_text(angle=90, hjust=1)) + labs(x = "State", y= "Total Number Killed", title = "Total Killed Per State (2013-2018)")
 
-ggplot(data_clean, aes(x = part1_age, y = sum(n_killed), bins = 10)) + geom_histogram(stat = "identity")
-
+ggplot(data_clean, aes(x = part1_age, y = sum(n_killed), bins = 10)) + geom_histogram(stat = "identity") + labs(x="Ages of Actors", y = "Total Number Killed", title = "Total Killed by Actors of Each Particular Age (2013-2018)")
 
 ```
 
