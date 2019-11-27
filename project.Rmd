@@ -74,9 +74,10 @@ data_clean.map = data_clean.map + scale_fill_gradientn(colours = rev(brewer.pal(
 
 data_clean.map = data_clean.map + theme_bw()
 
-ggsave(filename = "D:\\Documents\\ds202_project\\data_clean1.png")
+# the code snippet below adds red points over each gun violence incident to the previous map
+#data_clean.map <- data_clean.map + geom_point(data=data_clean,  aes(x=data_clean$longitude, y=data_clean$latitude), fill="red", shape=23, alpha=0.8)
 
-
+ggsave(filename = "D:\\Documents\\ds202_project\\data_clean.png")
 
 
 
@@ -86,6 +87,23 @@ ggplot(data_clean, aes(x = part1_age, y = sum(n_killed), bins = 10)) + geom_hist
 
 
 ```
+
+#####################################
+#####################################
+###  Exploring maps using 'tmap'  ###
+#####################################
+#####################################
+
+```{r}
+
+library(tmap)
+
+
+
+```
+
+
+
 
 
 
