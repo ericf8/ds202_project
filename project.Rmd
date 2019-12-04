@@ -1,6 +1,6 @@
 ---
 title: "project"
-author: "Eric Friesth"
+author: "Eric Friesth, Aashwin Lamsal"
 date: "11/21/2019"
 output: html_document
 ---
@@ -31,14 +31,14 @@ data$part1_age <- as.integer(data$part1_age)
 #head(data)
 #str(data)
 
-#Next, we drop rows with NA values using na.omit
+#Next, we drop rows with NA values using na.omit.
 
 data_clean <- na.omit(data)
 head(data_clean, 10)
 
-# Finally, we noticed in our two factor variables, state and city_or_county, had levels "" that had to be removed as they were unnecessary
+# Finally, we noticed in our two factor variables, state and city_or_county, had levels "" (empty strings) that had to be removed as they were unwanted.
 
-# We did this using the following code to drop levels
+# We did this using the following code to drop levels.
 
 data_clean$state[data_clean$state == ""] = NA
 data_clean$state = droplevels(data_clean$state)
@@ -83,6 +83,7 @@ ggsave(filename = "D:\\Documents\\ds202_project\\data_clean1.png")
 ggplot(data_clean, aes(x = state, y = sum(n_killed))) + geom_bar(stat = "identity") + theme(axis.text.x = element_text(angle=90, hjust=1)) + labs(x = "State", y= "Total Number Killed", title = "Total Killed Per State (2013-2018)")
 
 ggplot(data_clean, aes(x = part1_age, y = sum(n_killed), bins = 10)) + geom_histogram(stat = "identity") + labs(x="Ages of Actors", y = "Total Number Killed", title = "Total Killed by Actors of Each Particular Age (2013-2018)")
+
 
 ```
 
