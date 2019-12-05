@@ -48,6 +48,12 @@ data_clean$city_or_county[data_clean$city_or_county == ""] = NA
 data_clean$city_or_county = droplevels(data_clean$city_or_county)
 str(data_clean)
 
+# Extracted the year and month from the date to be used for more analysis
+
+data_clean$year = substring(data_clean$date, 1, 4)
+
+data_clean$month = substring(data_clean$date, 6, 7)
+
 ```
 
 ### Data Visualization
@@ -84,6 +90,10 @@ ggsave(filename = "D:\\Documents\\ds202_project\\data_clean.png")
 ggplot(data_clean, aes(x = state, y = sum(n_killed))) + geom_bar(stat = "identity") + theme(axis.text.x = element_text(angle=90, hjust=1)) + labs(x = "State", y= "Total Number Killed", title = "Total Killed Per State (2013-2018)")
 
 ggplot(data_clean, aes(x = part1_age, y = sum(n_killed), bins = 10)) + geom_histogram(stat = "identity") + labs(x="Ages of Actors", y = "Total Number Killed", title = "Total Killed by Actors of Each Particular Age (2013-2018)")
+
+ggplot(data_clean, aes(x = year)) + geom_histogram(stat = "count") + labs(x = "Year", y = "Frequency", title = "Distribution of Incidents by Year")
+
+ggplot(data_clean, aes(x = month, fill = state)) + geom_histogram(stat = "count") + labs(x = "Month", y = "Frequency", title = "Distribution of Incidents by Month") + ylim(0, 1200)
 
 
 ```
