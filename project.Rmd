@@ -94,8 +94,6 @@ ggsave(filename = "D:\\Documents\\ds202_project\\data_clean.png")
 ggplot(data_clean, aes(x = , y = part1_age, color = "#FA7921")) + geom_point() + labs()
 
 
-
-
 # Bar chart: state x sum(n_killed)
         # Can't get this reorder to work??
 
@@ -126,9 +124,10 @@ ggplot(data_clean, aes(x = month)) + geom_histogram(stat = "count", fill = "#42a
 ggplot(data_clean, aes(x = year, y = n_killed)) + geom_histogram(stat = "identity", fill = "#42a14b") + labs(x = "Month", y = "Frequency", title = "Distribution of Incidents by Month")
 
 
-# Timeseries: date x n_killed grouped by state?
+# Line graph: date x n_killed grouped by state?
+# Time series??
 
-ggplot
+ggplot(data_clean, aes(x = date, y = total_kills)) + geom_line()
 
 
 
