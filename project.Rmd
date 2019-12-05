@@ -87,14 +87,23 @@ data_clean.map = data_clean.map + theme_bw()
 ggsave(filename = "D:\\Documents\\ds202_project\\data_clean.png")
 
 
-## Other Plots ( still need to order them and add scatter plots)
+## Other Plots ( still need to order them )
+
+# Scatter: 
+
+ggplot(data_clean, aes(x = , y = part1_age, color = "#FA7921")) + geom_point() + labs()
 
 
 
 
 # Bar chart: state x sum(n_killed)
+        # Can't get this reorder to work??
 
-ggplot(data_clean, aes(x = state, y = sum(n_killed))) + geom_bar(stat = "identity") + theme(axis.text.x = element_text(angle=90, hjust=1)) + labs(x = "State", y= "Total Number Killed", title = "Total Killed Per State (2013-2018)")
+ggplot(data_clean, aes(x = reorder(state, -n_killed, function(x){sum(x) }), y = sum(n_killed))) + geom_bar(stat = "identity") + theme(axis.text.x = element_text(angle=90, hjust=1)) + labs(x = "State", y= "Total Number Killed", title = "Total Killed Per State (2013-2018)")
+
+# Bar chart: year x n_killed colored by state?
+
+ggplot(data_clean, aes(x = year, y = n_killed, fill = state)) + geom_bar(stat = "identity", position = "fill")
 
 
 # Histogram: part1_age x sum(n_killed)
@@ -114,7 +123,12 @@ ggplot(data_clean, aes(x = month)) + geom_histogram(stat = "count", fill = "#42a
 
 # Histogram: year x n_killed
 
-ggplot(data_clean, aes(x = year, y = n_killed)) + geom_histogram(stat = "identity", fill = "#42a14b") + labs(x = "Month", y = "Frequency", title = "Distribution of Incidents by Month") + ylim(0, 1200)
+ggplot(data_clean, aes(x = year, y = n_killed)) + geom_histogram(stat = "identity", fill = "#42a14b") + labs(x = "Month", y = "Frequency", title = "Distribution of Incidents by Month")
+
+
+# Timeseries: date x n_killed grouped by state?
+
+ggplot
 
 
 
