@@ -93,7 +93,7 @@ ggplot(data_clean, aes(x = part1_age, y = sum(n_killed), bins = 10)) + geom_hist
 
 ggplot(data_clean, aes(x = year)) + geom_histogram(stat = "count") + labs(x = "Year", y = "Frequency", title = "Distribution of Incidents by Year")
 
-ggplot(data_clean, aes(x = month, fill = state)) + geom_histogram(stat = "count") + labs(x = "Month", y = "Frequency", title = "Distribution of Incidents by Month") + ylim(0, 1200)
+ggplot(data_clean, aes(x = month,)) + geom_histogram(stat = "count") + labs(x = "Month", y = "Frequency", title = "Distribution of Incidents by Month") + ylim(0, 1200)
 
 
 ```
