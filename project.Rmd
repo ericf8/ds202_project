@@ -61,6 +61,7 @@ data_clean$month = substring(data_clean$date, 6, 7)
 ```{r}
 
 library(tidyverse)
+library(ggplot2)
 library(ggmap)
 library(sf)
 library(mapview)
@@ -86,29 +87,42 @@ data_clean.map = data_clean.map + theme_bw()
 ggsave(filename = "D:\\Documents\\ds202_project\\data_clean.png")
 
 
+## Other Plots ( still need to order them and add scatter plots)
+
+
+
+
+# Bar chart: state x sum(n_killed)
 
 ggplot(data_clean, aes(x = state, y = sum(n_killed))) + geom_bar(stat = "identity") + theme(axis.text.x = element_text(angle=90, hjust=1)) + labs(x = "State", y= "Total Number Killed", title = "Total Killed Per State (2013-2018)")
 
+
+# Histogram: part1_age x sum(n_killed)
+
 ggplot(data_clean, aes(x = part1_age, y = sum(n_killed), bins = 10)) + geom_histogram(stat = "identity") + labs(x="Ages of Actors", y = "Total Number Killed", title = "Total Killed by Actors of Each Particular Age (2013-2018)")
+
+
+# Histogram: year
 
 ggplot(data_clean, aes(x = year)) + geom_histogram(stat = "count") + labs(x = "Year", y = "Frequency", title = "Distribution of Incidents by Year")
 
+
+# Histogram: month
+
 ggplot(data_clean, aes(x = month)) + geom_histogram(stat = "count", fill = "#42a14b") + labs(x = "Month", y = "Frequency", title = "Distribution of Incidents by Month") + ylim(0, 1200)
+
+
+# Histogram: year x n_killed
 
 ggplot(data_clean, aes(x = year, y = n_killed)) + geom_histogram(stat = "identity", fill = "#42a14b") + labs(x = "Month", y = "Frequency", title = "Distribution of Incidents by Month") + ylim(0, 1200)
 
 
+
 ```
 
-#####################################
-#####################################
-###  Exploring maps using 'tmap'  ###
-#####################################
-#####################################
 
 ```{r}
 
-library(tmap)
 
 
 
