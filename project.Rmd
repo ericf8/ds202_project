@@ -89,9 +89,9 @@ ggsave(filename = "D:\\Documents\\ds202_project\\data_clean.png")
 
 ## Other Plots ( still need to order them )
 
-# Scatter: 
+# Scatter Pair plot:
 
-ggplot(data_clean, aes(x = , y = part1_age, color = "#FA7921")) + geom_point() + labs()
+pairs(data_clean[ ,7:18], pch = 19, lower.panel = NULL)
 
 
 # Bar chart: state x sum(n_killed)
@@ -102,6 +102,11 @@ ggplot(data_clean, aes(x = reorder(state, -n_killed, function(x){sum(x) }), y = 
 # Bar chart: year x n_killed colored by state?
 
 ggplot(data_clean, aes(x = year, y = n_killed, fill = state)) + geom_bar(stat = "identity", position = "fill")
+
+
+# Bar chart: state x age ?
+
+ggplot(data_clean, aes(x = state, y = part1_age)) + geom_bar(stat = "identity")
 
 
 # Histogram: part1_age x sum(n_killed)
