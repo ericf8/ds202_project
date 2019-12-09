@@ -141,10 +141,45 @@ ggplot(data_clean, aes(x = date, y = total_kills)) + geom_line()
 
 ```
 
-
+## Predictive Models
+### Teen actors in relation to the number killed/injured
 ```{r}
-#Predictive Model below
+#Predictive Models below
+#First, we look at Linear Models
 
+#Looking for relationships between the number of teen actors and any of the other variables 
+fit0 = lm(n_teen_part~n_killed+n_injured,data=data_clean)
+summary(fit0)
+#Results show an Adjusted R-squared of 0.01936, an F-statistic of 107 with a p-value < 2.2e-16
+#This can be interpreted that the estimate of the mean number of teen actors is 0.097279 when n_killed and n_injured are both 0.
+#The 0.01 estimate for n_killed means that the mean value of teenage actors would be estimated to increase by 0.01 if n_killed increased by 1 unit, holding all other covariates constant.
+#The 0.085432 estimate for n_injured means that the mean value of teenage actors would be estimated to increase by 0.085432 if n_injured increased by 1 unit, holding all other covariates constant.
+
+#However, these results show that the number of people killed or injured are not good predictors for estimating the number of teenaged actors in gun violence, as it would be too difficult to predict something as unpredictable as gun violence.
+
+```
+### Number of people killed in relation to the different age groups of actors.
+```{r}
+#Looking for relationships between n_killed and the different age groups of participants 
+fit1 = lm(n_killed~n_adult_part+n_teen_part+n_child_part, data=data_clean)
+summary(fit1)
+
+
+
+
+
+# UPDATE THIS COMMENT LATER:   Results to be interpreted in a similar manner as ABOVE
+
+```
+### The number of actors arrested, in relation to the age of the actor, disregarding children.
+```{r}
+fit2 = lm(n_part_arrested~n_adult_part+n_teen_part, data=data_clean)
+summary(fit2)
+#Results show an Adjusted R-squared of 0.1643, an F-statistic of 1056 with a p-value < 2.2e-16
+#This can be interpreted that the estimate of the mean number of teen actors is -0.012580 when n_adult_part and n_teen_part are both 0. This means that 0.012580 of the average person is being unincarcerated when the number of teen and adult actors are both equal to 0. This doesn't make sense since you'd imagine the estimate to be 0 when the covariates are 0.
+#The 0.330548 estimate for n_adult_part means that the mean value of actors arreseted would be estimated to increase by 0.330548 if n_adult_part increased by 1 unit, holding all other covariates constant.
+#The 0.393224 estimate for n_teen_part means that the mean value of arrested actors would be estimated to increase by 0.393224 if n_teen_part increased by 1 unit, holding all other covariates constant.
+#The correlation isn't strong enough to draw meaningful conclusions from this model, as the R squared is only 16%
 
 
 ```
