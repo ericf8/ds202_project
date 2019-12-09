@@ -103,6 +103,8 @@ ggplot(data_clean, aes(x = reorder(state, -n_killed, function(x){sum(x) }), y = 
 
 ggplot(data_clean, aes(x = year, y = n_killed, fill = state)) + geom_bar(stat = "identity", position = "fill")
 
+ggplot(data_clean, aes(x = state, y = n_killed, fill = year)) + geom_bar(stat = "identity", position = "fill")
+
 
 # Bar chart: state x age ?
 
