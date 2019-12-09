@@ -48,6 +48,12 @@ data_clean$city_or_county[data_clean$city_or_county == ""] = NA
 data_clean$city_or_county = droplevels(data_clean$city_or_county)
 str(data_clean)
 
+# Extracted the year and month from the date to be used for more analysis
+
+data_clean$year = substring(data_clean$date, 1, 4)
+
+data_clean$month = substring(data_clean$date, 6, 7)
+
 ```
 
 ### Data Visualization
@@ -55,6 +61,7 @@ str(data_clean)
 ```{r}
 
 library(tidyverse)
+library(ggplot2)
 library(ggmap)
 library(sf)
 library(mapview)
@@ -74,19 +81,76 @@ data_clean.map = data_clean.map + scale_fill_gradientn(colours = rev(brewer.pal(
 
 data_clean.map = data_clean.map + theme_bw()
 
-ggsave(filename = "D:\\Documents\\ds202_project\\data_clean1.png")
+# the code snippet below adds red points over each gun violence incident to the previous map
+#data_clean.map <- data_clean.map + geom_point(data=data_clean,  aes(x=data_clean$longitude, y=data_clean$latitude), fill="red", shape=23, alpha=0.8)
+
+ggsave(filename = "D:\\Documents\\ds202_project\\data_clean.png")
 
 
+## Other Plots ( still need to order them )
+
+# Scatter Pair plot:
+
+pairs(data_clean[ ,7:18], pch = 19, lower.panel = NULL)
 
 
+# Bar chart: state x sum(n_killed)
+        # Can't get this reorder to work??
 
-ggplot(data_clean, aes(x = state, y = sum(n_killed))) + geom_bar(stat = "identity") + theme(axis.text.x = element_text(angle=90, hjust=1)) + labs(x = "State", y= "Total Number Killed", title = "Total Killed Per State (2013-2018)")
+ggplot(data_clean, aes(x = reorder(state, -n_killed, function(x){sum(x) }), y = sum(n_killed))) + geom_bar(stat = "identity") + theme(axis.text.x = element_text(angle=90, hjust=1)) + labs(x = "State", y= "Total Number Killed", title = "Total Killed Per State (2013-2018)")
+
+# Bar chart: year x n_killed colored by state?
+
+ggplot(data_clean, aes(x = year, y = n_killed, fill = state)) + geom_bar(stat = "identity", position = "fill")
+
+ggplot(data_clean, aes(x = state, y = n_killed, fill = year)) + geom_bar(stat = "identity", position = "fill")
+
+
+# Bar chart: state x age ?
+
+ggplot(data_clean, aes(x = state, y = part1_age)) + geom_bar(stat = "identity")
+
+
+# Histogram: part1_age x sum(n_killed)
 
 ggplot(data_clean, aes(x = part1_age, y = sum(n_killed), bins = 10)) + geom_histogram(stat = "identity") + labs(x="Ages of Actors", y = "Total Number Killed", title = "Total Killed by Actors of Each Particular Age (2013-2018)")
 
  
 
+# Histogram: year
+
+ggplot(data_clean, aes(x = year)) + geom_histogram(stat = "count") + labs(x = "Year", y = "Frequency", title = "Distribution of Incidents by Year")
+
+
+# Histogram: month
+
+ggplot(data_clean, aes(x = month)) + geom_histogram(stat = "count", fill = "#42a14b") + labs(x = "Month", y = "Frequency", title = "Distribution of Incidents by Month") + ylim(0, 1200)
+
+
+# Histogram: year x n_killed
+
+ggplot(data_clean, aes(x = year, y = n_killed)) + geom_histogram(stat = "identity", fill = "#42a14b") + labs(x = "Month", y = "Frequency", title = "Distribution of Incidents by Month")
+
+
+# Line graph: date x n_killed grouped by state?
+# Time series??
+
+ggplot(data_clean, aes(x = date, y = total_kills)) + geom_line()
+
+
+
 ```
+
+
+```{r}
+
+
+
+
+```
+
+
+
 
 
 
