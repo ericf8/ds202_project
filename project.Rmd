@@ -167,8 +167,10 @@ date11 <- as.Date("2018-12-31")
 
 data_clean_2018 <-data_clean[data_clean$date >= date10 & data_clean$date <= date11, ]
 
-# The grouping isn't idea here, needs fixing
-ggplot(data_clean_2014, aes(x = ï..incident_id, y = n_killed, group = month)) + geom_line()
+# The grouping isn't ideal here, needs fixing
+ggplot(data_clean_2013, aes(x = date, y = n_killed)) + geom_line() +labs(x= "Dates", y="Number killed", title= "Distribution of people killed by Gun Violence in 2013")
+
+ggplot(data_clean_2014, aes(x = date, y = n_killed, group=month)) + geom_histogram(stat="identity", binwidth=  100) +labs(x= "Dates", y="Number killed", title= "Distribution of people killed by Gun Violence in 2014")
 
 str(data_clean)
 
@@ -182,7 +184,7 @@ str(data_clean)
 #First, we look at Linear Models
 
 #Looking for relationships between the number of teen actors and any of the other variables 
-fit0 = lm(n_teen_part~n_killed+n_injured,data=data_clean)
+fit0 <- lm(n_teen_part~n_killed+n_injured,data=data_clean)
 summary(fit0)
 #Results show an Adjusted R-squared of 0.01936, an F-statistic of 107 with a p-value < 2.2e-16
 #This can be interpreted that the estimate of the mean number of teen actors is 0.097279 when n_killed and n_injured are both 0.
