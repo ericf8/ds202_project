@@ -155,6 +155,63 @@ ggplot(data_clean, aes(x = year, y = n_killed)) + geom_histogram(stat = "identit
 
 ```
 
+
+
+## Visualizations cont.
+
+```{r}
+
+ggplot(data_clean, aes(x = month, y = n_part_arrested)) + geom_bar(stat= "identity", fill = "#05668D")
+
+# Chicago
+data_clean_chi = subset(data_clean, data_clean$city_or_county == "Chicago")
+
+ggplot(data_clean_chi, aes(x = month, y = n_part_arrested)) + geom_bar(stat="identity", fill = "#05668D") + ylim(0, 25)
+
+ggplot(data_clean_chi, aes(x = month, y = n_part_killed)) + geom_bar(stat="identity", fill = "#05668D") + ylim(0, 25)
+
+ggplot(data_clean_chi, aes(x = month, y = n_killed)) + geom_bar(stat="identity", fill = "#05668D") + ylim(0, 25)
+
+
+# New York (Bronx)
+data_clean_nyc = subset(data_clean, data_clean$state == "New York")
+data_clean_nyc = subset(data_clean, data_clean$city_or_county == "Bronx" | data_clean$city_or_county == "Brooklyn" | data_clean$city_or_county == "Staten Island" | data_clean$city_or_county == "Queens" | data_clean$city_or_county == "Manhattan")
+
+ggplot(data_clean_nyc, aes(x = month, y = n_part_arrested)) + geom_bar(stat="identity", fill = "#E55934") + ylim(0, 25)
+
+ggplot(data_clean_nyc, aes(x = month, y = n_part_killed)) + geom_bar(stat="identity", fill = "#E55934") + ylim(0, 25)
+
+ggplot(data_clean_nyc, aes(x = month, y = n_killed)) + geom_bar(stat="identity", fill = "#E55934") + ylim(0, 25)
+
+
+# Des Moines
+data_clean_dm = subset(data_clean, data_clean$city_or_county == "Des Moines")
+
+ggplot(data_clean_dm, aes(x = month, y = n_part_arrested)) + geom_bar(stat="identity", fill = "#9BC53D") + ylim(0, 25)
+
+ggplot(data_clean_dm, aes(x = month, y = n_part_killed)) + geom_bar(stat="identity", fill = "#9BC53D") + ylim(0, 25)
+
+ggplot(data_clean_dm, aes(x = month, y = n_killed)) + geom_bar(stat="identity", fill = "#9BC53D") + ylim(0, 25)
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Predictive Models
 ### Teen actors in relation to the number killed/injured
 ```{r}
