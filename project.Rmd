@@ -54,6 +54,11 @@ data_clean$year = substring(data_clean$date, 1, 4)
 
 data_clean$month = substring(data_clean$date, 6, 7)
 
+#changing the data types from characters to numeric
+
+data_clean$year <- as.numeric(data_clean$year)
+data_clean$month <- as.numeric(data_clean$month)
+
 ```
 
 ### Data Visualization
@@ -213,7 +218,7 @@ summary(fit3)
 ```{r}
 #KNN Regression 
 
-
+str(data_clean)
 
 
 ```
