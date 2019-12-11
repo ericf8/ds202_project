@@ -84,7 +84,7 @@ data_clean.map = data_clean.map + theme_bw()
 # the code snippet below adds red points over each gun violence incident to the previous map
 #data_clean.map <- data_clean.map + geom_point(data=data_clean,  aes(x=data_clean$longitude, y=data_clean$latitude), fill="red", shape=23, alpha=0.8)
 
-ggsave(filename = "D:\\Documents\\ds202_project\\data_clean.png")
+ggsave(filename = "D:\\Documents\\ds202_project\\data_clean.png") #change this to something else for your own local directories
 
 
 ## Other Plots ( still need to order them )
@@ -142,42 +142,10 @@ ggplot(data_clean, aes(x = year, y = n_killed)) + geom_histogram(stat = "identit
 # First we subset the dataframe, one for each year
 
 
-date0 <- as.Date("2013-01-01")
-date1 <- as.Date("2013-12-31")
 
-data_clean_2013 <-data_clean[data_clean$date >= date0 & data_clean$date <= date1, ]
-
-date2 <- as.Date("2014-01-01")
-date3 <- as.Date("2014-12-31")
-
-data_clean_2014 <-data_clean[data_clean$date >= date2 & data_clean$date <= date3, ]
-
-date4 <- as.Date("2015-01-01")
-date5 <- as.Date("2015-12-31")
-
-data_clean_2015 <-data_clean[data_clean$date >= date4 & data_clean$date <= date5, ]
-
-date6 <- as.Date("2016-01-01")
-date7 <- as.Date("2016-12-31")
-
-data_clean_2016 <-data_clean[data_clean$date >= date6 & data_clean$date <= date7, ]
-
-date8 <- as.Date("2017-01-01")
-date9 <- as.Date("2017-12-31")
-
-data_clean_2017 <-data_clean[data_clean$date >= date8 & data_clean$date <= date9, ]
-
-date10 <- as.Date("2018-01-01")
-date11 <- as.Date("2018-12-31")
-
-data_clean_2018 <-data_clean[data_clean$date >= date10 & data_clean$date <= date11, ]
 
 # The grouping isn't ideal here, needs fixing
-ggplot(data_clean_2013, aes(x = date, y = n_killed)) + geom_line() +labs(x= "Dates", y="Number killed", title= "Distribution of people killed by Gun Violence in 2013")
 
-ggplot(data_clean_2014, aes(x = date, y = n_killed, group=month)) + geom_point() +labs(x= "Dates", y="Number killed", title= "Distribution of people killed by Gun Violence in 2014")
-
-str(data_clean)
 
 
 ```
@@ -221,6 +189,23 @@ summary(fit2)
 #The 0.330548 estimate for n_adult_part means that the mean value of actors arreseted would be estimated to increase by 0.330548 if n_adult_part increased by 1 unit, holding all other covariates constant.
 #The 0.393224 estimate for n_teen_part means that the mean value of arrested actors would be estimated to increase by 0.393224 if n_teen_part increased by 1 unit, holding all other covariates constant.
 #The correlation isn't strong enough to draw meaningful conclusions from this model, as the R squared is only 16%
+
+
+```
+### The number of actors killed vs the number of victims killed
+```{r}
+fit3 = lm(n_part_killed~n_adult_part+n_teen_part+n_killed, data=data_clean)
+summary(fit3)
+
+
+#Results show an Adjusted R-squared of 0.9963, an F-statistic of 9.562e+05 with a p-value < 2.2e-16
+#This can be interpreted that the estimate of the mean number of actors who've died is 0.0011 when n_adult_part, n_teen_part, and n_killed are both 0 (though it's not 0, it's very close). This means that 0.0011 of the average actor is dead when the number of teen, adult actors, and number killed are all equal to 0. 
+#The 0.0002468 estimate for n_adult_part means that the mean value of actors killed would be estimated to increase by 0.0002468 if n_adult_part increased by 1 unit, holding all other covariates constant.
+#The -0.0009959 estimate for n_teen_part means that the mean value of dead actors would be estimated to increase by -0.0009959 if n_teen_part increased by 1 unit, holding all other covariates constant (this doesn't make much sense as the opposite of dying is coming back to life, which goes to show that these weren't good predictors).
+# The 0.9925804 estimate for n_killed means taht the mean value of dead actors would increase by almost 1 when n_killed increases by 1 unit, holding all covariates constant.
+#The correlation is strong enough, with an adjusted R-squared of 0.9963, but this dataset never clarified whether or not the actor gets added to this count whenever he/she dies. It seems like that might be the case due to the R-squared value being almost 1.
+
+
 
 
 ```
