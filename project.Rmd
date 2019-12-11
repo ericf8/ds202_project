@@ -197,7 +197,6 @@ summary(fit2)
 fit3 = lm(n_part_killed~n_adult_part+n_teen_part+n_killed, data=data_clean)
 summary(fit3)
 
-
 #Results show an Adjusted R-squared of 0.9963, an F-statistic of 9.562e+05 with a p-value < 2.2e-16
 #This can be interpreted that the estimate of the mean number of actors who've died is 0.0011 when n_adult_part, n_teen_part, and n_killed are both 0 (though it's not 0, it's very close). This means that 0.0011 of the average actor is dead when the number of teen, adult actors, and number killed are all equal to 0. 
 #The 0.0002468 estimate for n_adult_part means that the mean value of actors killed would be estimated to increase by 0.0002468 if n_adult_part increased by 1 unit, holding all other covariates constant.
@@ -206,14 +205,18 @@ summary(fit3)
 #The correlation is strong enough, with an adjusted R-squared of 0.9963, but this dataset never clarified whether or not the actor gets added to this count whenever he/she dies. It seems like that might be the case due to the R-squared value being almost 1.
 
 
-
-
 ```
 
 
 
 
+```{r}
+#KNN Regression 
 
+
+
+
+```
 
 
 
