@@ -111,6 +111,11 @@ ggplot(data_clean, aes(x = state, y = n_killed, fill = year)) + geom_bar(stat = 
 ggplot(data_clean, aes(x = state, y = part1_age)) + geom_bar(stat = "identity")
 
 
+# Number of victims killed versus Number of Actors killed
+ggplot(data_clean, aes(x = n_killed, y = n_part_killed)) + geom_histogram(stat="identity")
+# Number of victims versus Number of Actors arrested
+ggplot(data_clean, aes(x = n_killed, y = n_part_arrested)) + geom_histogram(stat="identity")
+
 # Histogram: part1_age x sum(n_killed)
 
 ggplot(data_clean, aes(x = part1_age, y = sum(n_killed), bins = 10)) + geom_histogram(stat = "identity") + labs(x="Ages of Actors", y = "Total Number Killed", title = "Total Killed by Actors of Each Particular Age (2013-2018)")
@@ -170,7 +175,7 @@ data_clean_2018 <-data_clean[data_clean$date >= date10 & data_clean$date <= date
 # The grouping isn't ideal here, needs fixing
 ggplot(data_clean_2013, aes(x = date, y = n_killed)) + geom_line() +labs(x= "Dates", y="Number killed", title= "Distribution of people killed by Gun Violence in 2013")
 
-ggplot(data_clean_2014, aes(x = date, y = n_killed, group=month)) + geom_histogram(stat="identity", binwidth=  100) +labs(x= "Dates", y="Number killed", title= "Distribution of people killed by Gun Violence in 2014")
+ggplot(data_clean_2014, aes(x = date, y = n_killed, group=month)) + geom_point() +labs(x= "Dates", y="Number killed", title= "Distribution of people killed by Gun Violence in 2014")
 
 str(data_clean)
 
