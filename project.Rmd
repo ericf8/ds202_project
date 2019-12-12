@@ -113,7 +113,7 @@ ggplot(data_clean, aes(x = state, y = n_killed, fill = year)) + geom_bar(stat = 
 
 # Bar chart: state x age ?
 
-ggplot(data_clean, aes(x = state, y = part1_age)) + geom_bar(stat = "identity")
+ggplot(data_clean, aes(x = state, y = part1_age)) + geom_bar(stat = "identity") 
 
 
 # Number of victims killed versus Number of Actors killed
@@ -123,7 +123,7 @@ ggplot(data_clean, aes(x = n_killed, y = n_part_arrested)) + geom_histogram(stat
 
 # Histogram: part1_age x sum(n_killed)
 
-ggplot(data_clean, aes(x = part1_age, y = sum(n_killed), bins = 10)) + geom_histogram(stat = "identity") + labs(x="Ages of Actors", y = "Total Number Killed", title = "Total Killed by Actors of Each Particular Age (2013-2018)")
+ggplot(data_clean, aes(x = part1_age, y = sum(n_killed), bins = 10)) + geom_histogram(stat = "identity", fill = "blue") + labs(x="Ages of Actors", y = "Total Number Killed", title = "Total Killed by Actors of Each Particular Age (2013-2018)")
 
  
 
