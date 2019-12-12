@@ -1,6 +1,6 @@
 ---
 title: "project"
-author: "Eric Friesth, Aashwin Lamsal"
+author: "Eric Friesth, Aashwin Lamsal, Ethan Wanlass"
 date: "11/21/2019"
 output: html_document
 ---
@@ -34,7 +34,6 @@ data$part1_age <- as.integer(data$part1_age)
 #Next, we drop rows with NA values using na.omit.
 
 data_clean <- na.omit(data)
-head(data_clean, 10)
 
 # Finally, we noticed in our two factor variables, state and city_or_county, had levels "" (empty strings) that had to be removed as they were unwanted.
 
@@ -42,11 +41,9 @@ head(data_clean, 10)
 
 data_clean$state[data_clean$state == ""] = NA
 data_clean$state = droplevels(data_clean$state)
-str(data_clean)
 
 data_clean$city_or_county[data_clean$city_or_county == ""] = NA
 data_clean$city_or_county = droplevels(data_clean$city_or_county)
-str(data_clean)
 
 # Extracted the year and month from the date to be used for more analysis
 
@@ -59,18 +56,27 @@ data_clean$month = substring(data_clean$date, 6, 7)
 data_clean$year <- as.numeric(data_clean$year)
 data_clean$month <- as.numeric(data_clean$month)
 
+# Final view of cleaned data
+
+head(data_clean)
+str(data_clean)
+
 ```
 
-### Data Visualization
+## Data Visualization
 
-## Heatmap
-```{r, echo=FALSE}
+### Heatmap
+#### Our heatmap is saved in our github repo as 'data_clean.png'
+```{r, echo=FALSE, include=FALSE}
 library(tidyverse)
 library(ggplot2)
 library(ggmap)
 library(sf)
 library(mapview)
 library(RColorBrewer)
+```
+
+```{r, echo=FALSE, include=FALSE}
 
 #Creation of our continental US Map
 map_bounds = c(left = -125, bottom = 25, right = -65, top = 50)
@@ -91,26 +97,15 @@ data_clean.map = data_clean.map + theme_bw()
 
 ggsave(filename = "D:\\Documents\\ds202_project\\data_clean.png") #change this to something else for your own local directories
 
-
-
-
 ```
 
 ### Pairplot/Correlation Matrix
 ```{r}
 
-library(tidyverse)
-library(ggplot2)
-library(ggmap)
-library(sf)
-library(mapview)
-library(RColorBrewer)
-
-## Other Plots ( still need to order them )
-
 # Scatter Pair plot:
 
 pairs(data_clean[ ,7:18], pch = 19, lower.panel = NULL)
+
 ```
 
 ### Actor age vs. The sum of number killed between 2013 and 2018
@@ -150,10 +145,6 @@ ggplot(data_clean_chi, aes(x = month, y = n_part_arrested)) + geom_bar(stat="ide
 ggplot(data_clean_chi, aes(x = month, y = n_part_killed)) + geom_bar(stat="identity", fill = "#05668D") + ylim(0, 25) + labs(title = "Number of Actors Killed by Month in Chicago", x = "Month", y = "Number of Actors Killed")
 
 ```
-
-
-
-
 
 ## Predictive Models
 ### Teen actors in relation to the number killed/injured
