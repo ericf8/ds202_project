@@ -94,7 +94,7 @@ The population data was gathered from the U.S. Census Bureau, taken from https:/
 
 ### Number of Incidents per State
 
-One of our interests in this data set was finding the states with the most incidents and seeing in those states where those incidents were occurring. Since, we're using a sample of a sample, the results will not be the direct number of those incidents, but it is proportional. To find this, a table of the count of each state was found as well as a graph ranking the states from the most incidents to least incidents.
+One of our interests in this data set was finding the states with the most incidents and seeing in those states where those incidents were occurring. Since, we're using a sample of a sample, the results will not be the direct number of those incidents, but it is proportional. To find this, a graph ranking the states from the most incidents to least incidents was made.
 
 ```{r, echo=FALSE}
 # sort(table(data_clean$state), decreasing = TRUE)
@@ -112,7 +112,7 @@ ordered_incidents_per_state$state= reorder(incidents_per_state$state, -incidents
 ggplot(ordered_incidents_per_state, aes(state, n)) + geom_bar(stat = "identity", colour = "black", fill = "rosy brown") + theme(axis.text.x = element_text(angle=90, hjust=1)) + labs(title = "Number of Incidents per State", x = "Number of Incidents", y = "State")
 ```
 
-Looking at these two figures, we see that Illinois, California and Florida have the top three number of incidents. Basing code from Randy Lai from https://stackoverflow.com/questions/23206834/how-to-plot-a-us-state-in-r , we created the plots of those incidents for Illinois, California and Florida. 
+Looking at the figure, we see that Illinois, California and Florida have the top three number of incidents. Basing code from Randy Lai from https://stackoverflow.com/questions/23206834/how-to-plot-a-us-state-in-r , we created the plots of those incidents for Illinois, California and Florida, although only Illinois will be shown below. 
 
 ```{r, echo=FALSE}
 #Shooting locations for Illinois
@@ -131,6 +131,12 @@ Another factor to consider is the influence of population into these incidents. 
 
 
 ```{r, echo=FALSE}
+ggplot(per_capita, aes(POPESTIMATE2018,n)) + geom_point() + labs(title = "2018 Predicted Population to Number of Incidents", x = "Population", y = "Number of Incidents")
+```
+
+Looking at the plot, one can see there is a moderate to strong positive relation between the two. Thus, we'd like to compare the number of incidents per capita, using the predicted population for 2018, to see if there's any change from before. Similarly, the per capita numbers are not going to be exact, but should be proportional. 
+
+```{r, echo=FALSE}
 per_capita = inner_join(incidents_per_state,clean_population, by = "state")
 per_capita = per_capita %>% mutate(inc_per_capita = n/POPESTIMATE2018)  
 # str(per_capita)
@@ -139,14 +145,7 @@ per_capita$state = reorder(per_capita$state,-per_capita$inc_per_capita)
 ggplot(per_capita,aes(state,inc_per_capita)) + geom_bar(stat = "identity", colour = "black", fill = "plum")  + theme(axis.text.x = element_text(angle=90, hjust=1)) + labs(title = "Incidents per Capita per State", y= "Incidents per Capita", x = "State")
 ```
 
-```{r, echo=FALSE}
-ggplot(per_capita, aes(POPESTIMATE2018,n)) + geom_point() + labs(title = "2018 Predicted Population to Number of Incidents", x = "Population", y = "Number of Incidents")
-```
-
-Looking at the plot, one can see there is a moderate to strong positive relation between the two. Thus, we'd like to compare the number of incidents per capita, using the predicted population for 2018, to see if there's any change from before. Similarly, the per capita numbers are not going to be exact, but should be proportional. 
-
-
-Illinois is still is in the top three of the incidents per capita, but California and Florida has dropped significantly. Thus, it appears that those states have more incidents due to the population size. Now we'd like to see where the incidents occurred for the top two states incidents per capita, Delaware and Louisiana, based off of the same code from Randy Lai. 
+Illinois is still is in the top three of the incidents per capita, but California and Florida has dropped significantly. Thus, it appears that those states have more incidents due to the population size. The new top three have become Delaware, Louisiana and Illinois. It's unknown the specific cause to why those three cities as there's many variables such as politics, crime rate, poverty etc... The only conclusions we can draw is that  
 
 
 
@@ -328,6 +327,11 @@ The part I did in this project was exploration of the number of incidents both i
 
 ### Eric Friesth
 This dataset was a blast to explore and work with regardless of the issues we came across, like not have a strong number of predictors. Even without accurate predictor models, we were still able to pull some interesting insights from this data. My individual contribution included: Some sampling of the original dataset, creating visualizations and drawing insigts from comparing variables like State, City, Number of people killed, Age of Actor, and Number of actors killed/arrested.  
+
+##Sources
+
+https://stackoverflow.com/questions/23206834/how-to-plot-a-us-state-in-r
+https://www.census.gov/data/tables/time-series/demo/popest/2010s-state-total.html
 
 
 
