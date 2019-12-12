@@ -142,6 +142,8 @@ ggplot(data_clean, aes(x = month)) + geom_histogram(stat = "count", fill = "#42a
 ggplot(data_clean, aes(x = year, y = n_killed)) + geom_histogram(stat = "identity", fill = "#42a14b") + labs(x = "Month", y = "Frequency", title = "Distribution of Incidents by Month")
 
 
+
+
 # Line graph: date x n_killed grouped by state?
 # Time series??
 # First we subset the dataframe, one for each year
@@ -202,18 +204,6 @@ ggplot(data_clean_dm, aes(x = month, y = n_killed)) + geom_bar(stat="identity", 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 ## Predictive Models
 ### Teen actors in relation to the number killed/injured
 ```{r}
@@ -236,10 +226,6 @@ summary(fit0)
 #Looking for relationships between n_killed and the different age groups of participants 
 fit1 = lm(n_killed~n_adult_part+n_teen_part+n_child_part, data=data_clean)
 summary(fit1)
-
-
-
-
 
 # UPDATE THIS COMMENT LATER:   Results to be interpreted in a similar manner as ABOVE
 
@@ -271,16 +257,6 @@ summary(fit3)
 
 ```
 
-
-
-
-```{r}
-#KNN Regression 
-
-str(data_clean)
-
-
-```
 
 
 
