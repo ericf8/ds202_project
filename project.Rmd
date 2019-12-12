@@ -11,6 +11,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Gun Violence incidences recorded in the US from 2013 to 2018
 
+### Background
+
+#### This project analyzes the geographic and demographic data collected on incidences of gun violence around the United States from January 2013 til March 2018. This dataset was compiled on Kaggle after the Parkland Shooting in February 2018 and its purpose was to draw insights and hopefully predictions from these past ocurrances of gun violence. 
+
 ### Data Cleaning
 
 ```{r}
@@ -65,15 +69,18 @@ str(data_clean)
 
 ## Data Exploration
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, include=FALSE}
 library(tidyverse)
 population = read.csv('population.csv')
 head(population)
 
 unused_names = c("United States","Northeast Region","South Region","West Region", "Puerto Rico")
-clean_population = population  %>% select(NAME,POPESTIMATE2018) %>% 
+clean_population = population  
+clean_population = clean_population %>% select(NAME,POPESTIMATE2018) %>% 
   filter(NAME %in% data_clean$state)%>% droplevels(clean_population$Name)
+```
 
+```{r, echo=FALSE, include=FALSE}
 colnames(clean_population)[1] = "state"
 str(clean_population)
 
@@ -310,50 +317,20 @@ summary(fit3)
 #This can be interpreted that the estimate of the mean number of actors who've died is 0.0011 when n_adult_part, n_teen_part, and n_killed are both 0 (though it's not 0, it's very close). This means that 0.0011 of the average actor is dead when the number of teen, adult actors, and number killed are all equal to 0. 
 #The 0.0002468 estimate for n_adult_part means that the mean value of actors killed would be estimated to increase by 0.0002468 if n_adult_part increased by 1 unit, holding all other covariates constant.
 #The -0.0009959 estimate for n_teen_part means that the mean value of dead actors would be estimated to increase by -0.0009959 if n_teen_part increased by 1 unit, holding all other covariates constant (this doesn't make much sense as the opposite of dying is coming back to life, which goes to show that these weren't good predictors).
-# The 0.9925804 estimate for n_killed means taht the mean value of dead actors would increase by almost 1 when n_killed increases by 1 unit, holding all covariates constant.
+# The 0.9925804 estimate for n_killed means that the mean value of dead actors would increase by almost 1 when n_killed increases by 1 unit, holding all covariates constant.
 #The correlation is strong enough, with an adjusted R-squared of 0.9963, but this dataset never clarified whether or not the actor gets added to this count whenever he/she dies. It seems like that might be the case due to the R-squared value being almost 1.
 
 
 ```
 
+## Results
 
-
-######################################################################
-            
-              Changes to be made formatting-wise
-              
-######################################################################
-
-# Put each plot in a separate R block DONE
-
-# Title each plot with ### "TItle" DONE
-
-# Each plot block needs echo=FALSE DONE
-
-# Give each section a header
-
-# Move results and conclusion over from slides to below regressions DONE
-
-  EXPOUND UPON THE FOLLOWING:
-  This given dataset was not geared towards predictive modeling, but the variables themselves are interesting and easy to draw insights from.
-Through the geographic information, we can tell that there are some areas with much more violence than others.
-Demographic information showed that actors were, typically, in their late teens to mid twenties, and male.
-Teen actors are more likely to be arrested than killed by police.
-We did not have any data on the ethnicities of the people who were killed, that could lead to further insights.
-Summer months are the most active for gun violence.
-High rates of incidents occurring in January as well.
-Illinois is the state with the most incidents of gun violence, with Chicago being the most violent city.
-This insight was made after the sampling of the data, beforehand, Illinois was 3rd, trailing Texas and California
-Most incidents of gun violence ARE NOT MASS SHOOTINGS!
-A typical incident doesn’t even have deaths involved.
-Gun violence is on the rise.
-2018’s subtotal shows around 13,000 incidents had occurred, and we only had information for up until March.
-
-
-
-
-
-
+  As you can tell by our Regression Models and the correlation of our variables, this data served to be difficult to predict. However, we were able to draw many interesting insights from what we DO know. Some of the more interesting findings were:
+  - Age of actor (shooter) increases drastically in the teenage years, peaks through the 20s and drops off into the 30s
+  - Average actor age was ~ 30 years old
+  - Summer months have a higher rate of gun violence incidences as well as January specifically
+  - Chicago is a hot spot for violence and carries Illinois into the top state with the most incidences
+  - 2018 was on track to surpass 2017 in number of incidences
 
 
 
