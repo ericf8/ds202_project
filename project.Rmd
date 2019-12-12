@@ -131,6 +131,11 @@ Another factor to consider is the influence of population into these incidents. 
 
 
 ```{r, echo=FALSE}
+
+per_capita = inner_join(incidents_per_state,clean_population, by = "state")
+per_capita = per_capita %>% mutate(inc_per_capita = n/POPESTIMATE2018)  
+# str(per_capita)
+
 ggplot(per_capita, aes(POPESTIMATE2018,n)) + geom_point() + labs(title = "2018 Predicted Population to Number of Incidents", x = "Population", y = "Number of Incidents")
 ```
 
@@ -328,13 +333,20 @@ The part I did in this project was exploration of the number of incidents both i
 ### Eric Friesth
 This dataset was a blast to explore and work with regardless of the issues we came across, like not have a strong number of predictors. Even without accurate predictor models, we were still able to pull some interesting insights from this data. My individual contribution included: Some sampling of the original dataset, creating visualizations and drawing insigts from comparing variables like State, City, Number of people killed, Age of Actor, and Number of actors killed/arrested.  
 
-##Sources
+## Sources  
 
+Heatmap tutorials: 
+https://medium.com/@axelhodler/creating-a-heat-map-from-coordinates-using-r-780db4901075
+https://trucvietle.me/r/tutorial/2017/01/18/spatial-heat-map-plotting-using-r.html
+
+Map Visualization: 
 https://stackoverflow.com/questions/23206834/how-to-plot-a-us-state-in-r
+
+Population Dataset: 
 https://www.census.gov/data/tables/time-series/demo/popest/2010s-state-total.html
 
+Pair plot: 
+http://www.sthda.com/english/wiki/scatter-plot-matrices-r-base-graphs
 
-
-
-
-
+Dataset: 
+https://www.kaggle.com/jameslko/gun-violence-data#gun-violence-data_01-2013_03-2018.csv
