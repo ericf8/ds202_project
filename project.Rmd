@@ -63,6 +63,113 @@ str(data_clean)
 
 ```
 
+## Data Exploration
+
+```{r, echo=FALSE}
+population = read.csv('population.csv')
+head(population)
+
+unused_names = c("United States","Northeast Region","South Region","West Region", "Puerto Rico")
+clean_population = population  %>% select(NAME,POPESTIMATE2018) %>% 
+  filter(NAME %in% data_clean$state) %>%
+droplevels(clean_population$Name)
+colnames(clean_population)[1] = "state"
+str(clean_population)
+
+```
+
+The population data was gathered from the U.S. Census Bureau, taken from https://www.census.gov/data/tables/time-series/demo/popest/2010s-state-total.html. In this data set we deleted the unnecessary rows (regions and Puerto Rico) as well as Columns not in use. Additionally, the column for the states was called named, so it was renamed to state to match that of the kaggle set. 
+
+
+
+## Data Exploration continued
+
+### Number of Incidents per State
+
+One of our interests in this data set was finding the states with the most incidents and seeing in those states where those incidents were occurring. Since, we're using a sample of a sample, the results will not be the direct number of those incidents, but it is proportional. To find this, a table of the count of each state was found as well as a graph ranking the states from the most incidents to least incidents.
+
+```{r, echo=FALSE}
+sort(table(data_clean$state), decreasing = TRUE)
+
+incidents_per_state = data_clean %>% 
+  count(state) %>%
+  group_by(state)
+
+incidents_per_state
+levels(incidents_per_state$state)
+
+ordered_incidents_per_state = incidents_per_state
+ordered_incidents_per_state$state= reorder(incidents_per_state$state, -incidents_per_state$n)
+
+ggplot(ordered_incidents_per_state, aes(state, n)) + geom_bar(stat = "identity", colour = "black", fill = "rosy brown") + theme(axis.text.x = element_text(angle=90, hjust=1)) + labs(title = "Number of Incidents per State", x = "Number of Incidents", y = "State")
+```
+
+Looking at these two figures, we see that Illinois, California and Florida have the top three number of incidents. Basing code from Randy Lai from https://stackoverflow.com/questions/23206834/how-to-plot-a-us-state-in-r , we created the plots of those incidents for Illinois, California and Florida. 
+
+```{r, echo=FALSE}
+#Shooting locations for Illinois
+
+Illinois = filter(data_clean, state == "Illinois")
+Illinois_map = map_data('state', region = 'Illinois')
+
+ggplot() + geom_polygon(data = Illinois_map, aes(x=long, y=lat,group=group),colour="black", fill="white" )+  geom_point(data = Illinois,aes(x=longitude,y=latitude),alpha = .2,colour="red")+ coord_fixed()
+
+#Shooting locations for California
+
+California = filter(data_clean, state == "California")
+California_map = map_data('state', region = 'California')
+
+ggplot() + geom_polygon(data = California_map, aes(x=long, y=lat,group=group),colour="black", fill="white" )+  geom_point(data = California,aes(x=longitude,y=latitude),alpha = .2,colour="red") + coord_fixed()
+
+#Shooting locations for Florida
+
+Florida = filter(data_clean, state == "Florida")
+Florida_map = map_data('state', region = 'Florida')
+
+ggplot() + geom_polygon(data = Florida_map, aes(x=long, y=lat,group=group),colour="black", fill="white" )+  geom_point(data = Florida,aes(x=longitude,y=latitude),alpha = .2,colour="red") + coord_fixed()
+```
+
+The incidents for each of these states are mostly occurring around the major cities in that State. For Illinois, most of the incidents are in the upper right of the state where chicago. For California, the major hotspots are around their coastal cities: San Francisco, Los Angeles and San Diego. For Florida, the major hotspots are around Miami, Orlando, Tampa and Jacksonville. Thus, it appears that the metropolitan areas have the most incidents. 
+
+Another factor to consider is the influence of population into these incidents. Illinois, California and Florida all have high state population in the U.S., so we wanted to see the relation of population to the number of incidents.  
+
+```{r, echo=FALSE}
+ggplot(per_capita, aes(POPESTIMATE2018,n)) + geom_point() + labs(title = "2018 Predicted Population to Number of Incidents", x = "Population", y = "Number of Incidents")
+```
+
+Looking at the plot, one can see there is a moderate to strong positive relation between the two. Thus, we'd like to compare the number of incidents per capita, using the predicted population for 2018, to see if there's any change from before. Similarly, the per capita numbers are not going to be exact, but should be proportional. 
+
+```{r, echo=FALSE}
+per_capita = inner_join(incidents_per_state,clean_population, by = "state")
+per_capita = per_capita %>% mutate(inc_per_capita = n/POPESTIMATE2018)  
+str(per_capita)
+
+per_capita$state = reorder(per_capita$state,-per_capita$inc_per_capita)
+ggplot(per_capita,aes(state,inc_per_capita)) + geom_bar(stat = "identity", colour = "black", fill = "plum")  + theme(axis.text.x = element_text(angle=90, hjust=1)) + labs(title = "Incidents per Capita per State", y= "Incidents per Capita", x = "State")
+```
+
+Illinois is still is in the top three of the incidents per capita, but California and Florida has dropped significantly. Thus, it appears that those states have more incidents due to the population size. Now we'd like to see where the incidents occurred for the top two states incidents per capita, Delaware and Louisiana, based off of the same code from Randy Lai. 
+
+```{r, echo=FALSE}
+
+Delaware = filter(data_clean, state == "Delaware")
+Delaware_map = map_data('state', region = 'Delaware')
+
+
+ggplot() + geom_polygon(data = Delaware_map, aes(x=long, y=lat,group=group),colour="black", fill="white" )+  geom_point(data = Delaware,aes(x=longitude,y=latitude),alpha = .2,colour="red") + coord_fixed()
+
+#Shooting locations for Louisiana
+
+Louisiana = filter(data_clean, state == "Louisiana")
+Louisiana_map = map_data('state', region = 'Louisiana')
+
+ggplot() + geom_polygon(data = Louisiana_map, aes(x=long, y=lat,group=group),colour="black", fill="white" )+  geom_point(data = Louisiana,aes(x=longitude,y=latitude),alpha = .2,colour="red") + coord_fixed() 
+```
+
+These maps seem simlar to our results earlier, with the major hot spots being situated by the major cities. However, there are significantly less incidences than those from earlier.  
+
+
+
 ## Data Visualization
 
 ### Heatmap
