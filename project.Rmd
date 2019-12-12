@@ -123,6 +123,7 @@ ggplot(data_clean, aes(x = part1_age, y = sum(n_killed))) + geom_histogram(stat 
 
 ggplot(data_clean, aes(x = year)) + geom_histogram(stat = "count",  fill = "#42a14b") + labs(x = "Year", y = "Frequency", title = "Distribution of Incidents by Year")
 ```
+
 ### Distribution of Gun violence incidents over Time (months)
 ```{r, echo=FALSE}
 # Histogram: month
@@ -163,7 +164,9 @@ summary(fit0)
 #However, these results show that the number of people killed or injured are not good predictors for estimating the number of teenaged actors in gun violence, as it would be too difficult to predict something as unpredictable as gun violence.
 
 ```
+
 ### Number of people killed in relation to the different age groups of actors.
+
 ```{r}
 #Looking for relationships between n_killed and the different age groups of participants 
 fit1 = lm(n_killed~n_adult_part+n_teen_part+n_child_part, data=data_clean)
@@ -174,6 +177,7 @@ summary(fit1)
 ```
 
 ### The number of actors arrested, in relation to the age of the actor, disregarding children.
+
 ```{r}
 fit2 = lm(n_part_arrested~n_adult_part+n_teen_part, data=data_clean)
 summary(fit2)
@@ -185,7 +189,9 @@ summary(fit2)
 
 
 ```
+
 ### The number of actors killed vs the number of victims killed
+
 ```{r}
 fit3 = lm(n_part_killed~n_adult_part+n_teen_part+n_killed, data=data_clean)
 summary(fit3)
