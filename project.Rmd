@@ -97,14 +97,14 @@ The population data was gathered from the U.S. Census Bureau, taken from https:/
 One of our interests in this data set was finding the states with the most incidents and seeing in those states where those incidents were occurring. Since, we're using a sample of a sample, the results will not be the direct number of those incidents, but it is proportional. To find this, a table of the count of each state was found as well as a graph ranking the states from the most incidents to least incidents.
 
 ```{r, echo=FALSE}
-sort(table(data_clean$state), decreasing = TRUE)
+# sort(table(data_clean$state), decreasing = TRUE)
 
 incidents_per_state = data_clean %>% 
   count(state) %>%
   group_by(state)
 
-incidents_per_state
-levels(incidents_per_state$state)
+# incidents_per_state
+# levels(incidents_per_state$state)
 
 ordered_incidents_per_state = incidents_per_state
 ordered_incidents_per_state$state= reorder(incidents_per_state$state, -incidents_per_state$n)
@@ -122,19 +122,7 @@ Illinois_map = map_data('state', region = 'Illinois')
 
 ggplot() + geom_polygon(data = Illinois_map, aes(x=long, y=lat,group=group),colour="black", fill="white" )+  geom_point(data = Illinois,aes(x=longitude,y=latitude),alpha = .2,colour="red")+ coord_fixed()
 
-#Shooting locations for California
 
-California = filter(data_clean, state == "California")
-California_map = map_data('state', region = 'California')
-
-ggplot() + geom_polygon(data = California_map, aes(x=long, y=lat,group=group),colour="black", fill="white" )+  geom_point(data = California,aes(x=longitude,y=latitude),alpha = .2,colour="red") + coord_fixed()
-
-#Shooting locations for Florida
-
-Florida = filter(data_clean, state == "Florida")
-Florida_map = map_data('state', region = 'Florida')
-
-ggplot() + geom_polygon(data = Florida_map, aes(x=long, y=lat,group=group),colour="black", fill="white" )+  geom_point(data = Florida,aes(x=longitude,y=latitude),alpha = .2,colour="red") + coord_fixed()
 ```
 
 The incidents for each of these states are mostly occurring around the major cities in that State. For Illinois, most of the incidents are in the upper right of the state where chicago. For California, the major hotspots are around their coastal cities: San Francisco, Los Angeles and San Diego. For Florida, the major hotspots are around Miami, Orlando, Tampa and Jacksonville. Thus, it appears that the metropolitan areas have the most incidents. 
@@ -145,7 +133,7 @@ Another factor to consider is the influence of population into these incidents. 
 ```{r, echo=FALSE}
 per_capita = inner_join(incidents_per_state,clean_population, by = "state")
 per_capita = per_capita %>% mutate(inc_per_capita = n/POPESTIMATE2018)  
-str(per_capita)
+# str(per_capita)
 
 per_capita$state = reorder(per_capita$state,-per_capita$inc_per_capita)
 ggplot(per_capita,aes(state,inc_per_capita)) + geom_bar(stat = "identity", colour = "black", fill = "plum")  + theme(axis.text.x = element_text(angle=90, hjust=1)) + labs(title = "Incidents per Capita per State", y= "Incidents per Capita", x = "State")
@@ -160,30 +148,14 @@ Looking at the plot, one can see there is a moderate to strong positive relation
 
 Illinois is still is in the top three of the incidents per capita, but California and Florida has dropped significantly. Thus, it appears that those states have more incidents due to the population size. Now we'd like to see where the incidents occurred for the top two states incidents per capita, Delaware and Louisiana, based off of the same code from Randy Lai. 
 
-```{r, echo=FALSE}
 
-Delaware = filter(data_clean, state == "Delaware")
-Delaware_map = map_data('state', region = 'Delaware')
-
-
-ggplot() + geom_polygon(data = Delaware_map, aes(x=long, y=lat,group=group),colour="black", fill="white" )+  geom_point(data = Delaware,aes(x=longitude,y=latitude),alpha = .2,colour="red") + coord_fixed()
-
-#Shooting locations for Louisiana
-
-Louisiana = filter(data_clean, state == "Louisiana")
-Louisiana_map = map_data('state', region = 'Louisiana')
-
-ggplot() + geom_polygon(data = Louisiana_map, aes(x=long, y=lat,group=group),colour="black", fill="white" )+  geom_point(data = Louisiana,aes(x=longitude,y=latitude),alpha = .2,colour="red") + coord_fixed() 
-```
-
-These maps seem simlar to our results earlier, with the major hot spots being situated by the major cities. However, there are significantly less incidences than those from earlier.  
 
 
 
 ## Data Visualization
 
 ### Heatmap
-#### Our heatmap is saved in our github repo as 'data_clean.png'
+#### Our heatmap is saved in our github repo as 'data_clean.png' (you'll need to change the name and file location/path in "ggsave()" in the code block which is commented out at the moment)
 ```{r, echo=FALSE, include=FALSE}
 library(tidyverse)
 library(ggplot2)
@@ -195,33 +167,32 @@ library(RColorBrewer)
 
 ```{r, echo=FALSE, include=FALSE}
 
-#Creation of our continental US Map
-map_bounds = c(left = -125, bottom = 25, right = -65, top = 50)
+    # Creation of our continental US Map
+#map_bounds = c(left = -125, bottom = 25, right = -65, top = 50)
 
-data_clean.map = get_stamenmap(map_bounds, zoom = 7, maptype = "toner-lite")
+#data_clean.map = get_stamenmap(map_bounds, zoom = 7, maptype = "toner-lite")
 
-data_clean.map = ggmap(data_clean.map, extent = "device", legend = "none")
+#data_clean.map = ggmap(data_clean.map, extent = "device", legend = "none")
 
-data_clean.map = data_clean.map + stat_density2d(data=data_clean, aes(x = data_clean$longitude, y = data_clean$latitude, fill = ..level.., alpha = ..level..), geom="polygon")
+#data_clean.map = data_clean.map + stat_density2d(data=data_clean, aes(x = data_clean$longitude, y = data_clean$latitude, fill = ..level.., alpha = ..level..), geom="polygon")
 
-data_clean.map = data_clean.map + scale_fill_gradientn(colours = rev(brewer.pal(7, "Spectral")))
+#data_clean.map = data_clean.map + scale_fill_gradientn(colours = rev(brewer.pal(7, "Spectral")))
 
 
-data_clean.map = data_clean.map + theme_bw()
+#data_clean.map = data_clean.map + theme_bw()
 
-# the code snippet below adds red points over each gun violence incident to the previous map
-#data_clean.map <- data_clean.map + geom_point(data=data_clean,  aes(x=data_clean$longitude, y=data_clean$latitude), fill="red", shape=23, alpha=0.8)
+    # the code snippet below adds red points over each gun violence incident to the previous map
+    # data_clean.map <- data_clean.map + geom_point(data=data_clean,  aes(x=data_clean$longitude, y=data_clean$latitude), fill="red", shape=23, alpha=0.8)
 
-ggsave(filename = "D:\\Documents\\ds202_project\\data_clean.png") #change this to something else for your own local directories
+#ggsave(filename = "D:\\Documents\\ds202_project\\data_clean.png") # change this to something else for your own local directories
 
 ```
 
-### Pairplot/Correlation Matrix
 ```{r}
 
 # Scatter Pair plot:
 
-pairs(data_clean[ ,7:18], pch = 19, lower.panel = NULL)
+# pairs(data_clean[ ,7:18], pch = 19, lower.panel = NULL)
 
 ```
 
@@ -233,6 +204,8 @@ ggplot(data_clean, aes(x = part1_age, y = sum(n_killed))) + geom_histogram(stat 
 
 ```
 
+The bar plot above is a distribution of the ages of the actors by the sum of the number of people killed over the ~ 5 year span. The patterned gaps seen between those bins could be due to our sampling of the data_clean dataframe. We can see that most actors are aged between 18 - 30 which is why we were interested in seen teens' involvement in gun violence incidences. 
+
 ### Distribution of Gun Violence Incidents over Time (2013-2018)
 ```{r, echo=FALSE}
 
@@ -240,6 +213,8 @@ ggplot(data_clean, aes(x = part1_age, y = sum(n_killed))) + geom_histogram(stat 
 
 ggplot(data_clean, aes(x = year)) + geom_histogram(stat = "count",  fill = "#42a14b") + labs(x = "Year", y = "Frequency", title = "Distribution of Incidents by Year")
 ```
+
+In this histogram, we can see a distribution of incidences across all the years (2013 - 2018). The years that we have comprehensive data for, 2014 - 2017, shows us that the number of gun violence incidences is increasing and that 2018 is on track to do the same. 
 
 ### Distribution of Gun violence incidents over Time (months)
 ```{r, echo=FALSE}
@@ -251,9 +226,9 @@ ggplot(data_clean, aes(x = month)) + geom_histogram(stat = "count", fill = "#42a
 ### Distributions of actors who were arrested vs. actors who were killed, Nationally compared to Chicago, IL
 
 ```{r, echo = FALSE}
-#National
-ggplot(data_clean, aes(x = month, y = n_part_arrested)) + geom_bar(stat= "identity", fill = "#FB8B24") + labs(title = "Number of Actors Arrested by Month in the U.S.", x = "Month", y = "Number of Actors Arrested") + ylim(0, 650)
-ggplot(data_clean, aes(x = month, y = n_part_killed)) + geom_bar(stat= "identity", fill = "#FB8B24") + labs(title = "Number of Actors Killed by Month in the U.S.", x = "Month", y = "Number of Actors Killed") + ylim(0, 650)
+# National
+# ggplot(data_clean, aes(x = month, y = n_part_arrested)) + geom_bar(stat= "identity", fill = "#FB8B24") + labs(title = "Number of Actors Arrested by Month in the U.S.", x = "Month", y = "Number of Actors Arrested") + ylim(0, 650)
+# ggplot(data_clean, aes(x = month, y = n_part_killed)) + geom_bar(stat= "identity", fill = "#FB8B24") + labs(title = "Number of Actors Killed by Month in the U.S.", x = "Month", y = "Number of Actors Killed") + ylim(0, 650)
 
 # Chicago
 data_clean_chi = subset(data_clean, data_clean$city_or_county == "Chicago")
@@ -325,12 +300,12 @@ summary(fit3)
 
 ## Results
 
-  As you can tell by our Regression Models and the correlation of our variables, this data served to be difficult to predict. However, we were able to draw many interesting insights from what we DO know. Some of the more interesting findings were:
-  - Age of actor (shooter) increases drastically in the teenage years, peaks through the 20s and drops off into the 30s
-  - Average actor age was ~ 30 years old
-  - Summer months have a higher rate of gun violence incidences as well as January specifically
-  - Chicago is a hot spot for violence and carries Illinois into the top state with the most incidences
-  - 2018 was on track to surpass 2017 in number of incidences
+#### As you can tell by our Regression Models and the correlation of our variables, this data served to be difficult to predict. However, we were able to draw many interesting insights from what we DO know. Some of the more interesting findings were:  
+  <br />- Age of actor (shooter) increases drastically in the teenage years, peaks through the 20s and drops off into the 30s  
+  <br />- Average actor age was ~ 30 years old  
+  <br />- Summer months have a higher rate of gun violence incidences as well as January specifically  
+  <br />- Chicago is a hot spot for violence and carries Illinois into the top state with the most incidences  
+  <br />- 2018 was on track to surpass 2017 in number of incidences  
 
 
 
