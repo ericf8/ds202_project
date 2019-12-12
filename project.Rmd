@@ -132,13 +132,8 @@ ggplot() + geom_polygon(data = Florida_map, aes(x=long, y=lat,group=group),colou
 
 The incidents for each of these states are mostly occurring around the major cities in that State. For Illinois, most of the incidents are in the upper right of the state where chicago. For California, the major hotspots are around their coastal cities: San Francisco, Los Angeles and San Diego. For Florida, the major hotspots are around Miami, Orlando, Tampa and Jacksonville. Thus, it appears that the metropolitan areas have the most incidents. 
 
-Another factor to consider is the influence of population into these incidents. Illinois, California and Florida all have high state population in the U.S., so we wanted to see the relation of population to the number of incidents.  
+Another factor to consider is the influence of population into these incidents. Illinois, California and Florida all have high state population in the U.S., so we wanted to see the relation of population to the number of incidents. 
 
-```{r, echo=FALSE}
-ggplot(per_capita, aes(POPESTIMATE2018,n)) + geom_point() + labs(title = "2018 Predicted Population to Number of Incidents", x = "Population", y = "Number of Incidents")
-```
-
-Looking at the plot, one can see there is a moderate to strong positive relation between the two. Thus, we'd like to compare the number of incidents per capita, using the predicted population for 2018, to see if there's any change from before. Similarly, the per capita numbers are not going to be exact, but should be proportional. 
 
 ```{r, echo=FALSE}
 per_capita = inner_join(incidents_per_state,clean_population, by = "state")
@@ -148,6 +143,13 @@ str(per_capita)
 per_capita$state = reorder(per_capita$state,-per_capita$inc_per_capita)
 ggplot(per_capita,aes(state,inc_per_capita)) + geom_bar(stat = "identity", colour = "black", fill = "plum")  + theme(axis.text.x = element_text(angle=90, hjust=1)) + labs(title = "Incidents per Capita per State", y= "Incidents per Capita", x = "State")
 ```
+
+```{r, echo=FALSE}
+ggplot(per_capita, aes(POPESTIMATE2018,n)) + geom_point() + labs(title = "2018 Predicted Population to Number of Incidents", x = "Population", y = "Number of Incidents")
+```
+
+Looking at the plot, one can see there is a moderate to strong positive relation between the two. Thus, we'd like to compare the number of incidents per capita, using the predicted population for 2018, to see if there's any change from before. Similarly, the per capita numbers are not going to be exact, but should be proportional. 
+
 
 Illinois is still is in the top three of the incidents per capita, but California and Florida has dropped significantly. Thus, it appears that those states have more incidents due to the population size. Now we'd like to see where the incidents occurred for the top two states incidents per capita, Delaware and Louisiana, based off of the same code from Randy Lai. 
 
