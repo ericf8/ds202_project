@@ -214,7 +214,7 @@ The bar plot above is a distribution of the ages of the actors by the sum of the
 ggplot(data_clean, aes(x = year)) + geom_histogram(stat = "count",  fill = "#42a14b") + labs(x = "Year", y = "Frequency", title = "Distribution of Incidents by Year")
 ```
 
-In this histogram, we can see a distribution of incidences across all the years (2013 - 2018). The years that we have comprehensive data for, 2014 - 2017, shows us that the number of gun violence incidences is increasing and that 2018 is on track to do the same. 
+In this histogram, we can see a distribution of incidences across all the years (2013 - 2018). The years that we have comprehensive data for, 2014 - 2017, shows us that the number of gun violence incidences is increasing and that 2018 is on track to be even higher than 2017. . 
 
 ### Distribution of Gun violence incidents over Time (months)
 ```{r, echo=FALSE}
@@ -222,6 +222,8 @@ In this histogram, we can see a distribution of incidences across all the years 
 
 ggplot(data_clean, aes(x = month)) + geom_histogram(stat = "count", fill = "#42a14b") + labs(x = "Month", y = "Frequency", title = "Distribution of Incidents by Month") + ylim(0, 1200)
 ```
+
+In this histogram, we see the distribution of incidences by month. From this, we can draw the conclusion that the peak months are in the summer (July and August). 
 
 ### Distributions of actors who were arrested vs. actors who were killed, Nationally compared to Chicago, IL
 
@@ -238,6 +240,8 @@ ggplot(data_clean_chi, aes(x = month, y = n_part_arrested)) + geom_bar(stat="ide
 ggplot(data_clean_chi, aes(x = month, y = n_part_killed)) + geom_bar(stat="identity", fill = "#05668D") + ylim(0, 25) + labs(title = "Number of Actors Killed by Month in Chicago", x = "Month", y = "Number of Actors Killed")
 
 ```
+
+In these Histograms, we can compare the number of actors arrested vs the number of actors killed in Chicago. From this, we can see that unlike most cities, Chicago tends to kill more of the actors on the spot rather than arresting them. 
 
 ## Predictive Models
 ### Teen actors in relation to the number killed/injured
@@ -307,7 +311,7 @@ The correlation is strong enough, with an adjusted R-squared of 0.9963, but this
 
 ## Results
 
-#### As you can tell by our Regression Models and the correlation of our variables, this data served to be difficult to predict. However, we were able to draw many interesting insights from what we DO know. Some of the more interesting findings were:  
+  As you can tell by our Regression Models and the correlation of our variables, this data served to be difficult to predict. However, we were able to draw many interesting insights from what we DO know. Some of the more interesting findings were:  
   <br />- Age of actor (shooter) increases drastically in the teenage years, peaks through the 20s and drops off into the 30s  
   <br />- Average actor age was ~ 30 years old  
   <br />- Summer months have a higher rate of gun violence incidences as well as January specifically  
@@ -321,6 +325,9 @@ I enjoyed working with all my group mates on this project, the only thing that I
 
 ### Ethan Wanlass
 The part I did in this project was exploration of the number of incidents both in for total number and per capita. I also found and cleaned the population data set from the U.S. Bureau. Furthermore, I put this work into the presentation. 
+
+### Eric Friesth
+This dataset was a blast to explore and work with regardless of the issues we came across, like not have a strong number of predictors. Even without accurate predictor models, we were still able to pull some interesting insights from this data. My individual contribution included: Some sampling of the original dataset, creating visualizations and drawing insigts from comparing variables like State, City, Number of people killed, Age of Actor, and Number of actors killed/arrested.  
 
 
 
