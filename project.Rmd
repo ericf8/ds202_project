@@ -243,19 +243,18 @@ ggplot(data_clean_chi, aes(x = month, y = n_part_killed)) + geom_bar(stat="ident
 ### Teen actors in relation to the number killed/injured
 ```{r}
 #Predictive Models below
-#First, we look at Linear Models
 
 #Looking for relationships between the number of teen actors and any of the other variables 
 fit0 <- lm(n_teen_part~n_killed+n_injured,data=data_clean)
 summary(fit0)
-#Results show an Adjusted R-squared of 0.01936, an F-statistic of 107 with a p-value < 2.2e-16
-#This can be interpreted that the estimate of the mean number of teen actors is 0.097279 when n_killed and n_injured are both 0.
-#The 0.01 estimate for n_killed means that the mean value of teenage actors would be estimated to increase by 0.01 if n_killed increased by 1 unit, holding all other covariates constant.
-#The 0.085432 estimate for n_injured means that the mean value of teenage actors would be estimated to increase by 0.085432 if n_injured increased by 1 unit, holding all other covariates constant.
-
-#However, these results show that the number of people killed or injured are not good predictors for estimating the number of teenaged actors in gun violence, as it would be too difficult to predict something as unpredictable as gun violence.
 
 ```
+Results show an Adjusted R-squared of 0.01936, an F-statistic of 107 with a p-value < 2.2e-16
+This can be interpreted that the estimate of the mean number of teen actors is 0.097279 when n_killed and n_injured are both 0.
+The 0.01 estimate for n_killed means that the mean value of teenage actors would be estimated to increase by 0.01 if n_killed increased by 1 unit, holding all other covariates constant.
+The 0.085432 estimate for n_injured means that the mean value of teenage actors would be estimated to increase by 0.085432 if n_injured increased by 1 unit, holding all other covariates constant.
+
+However, these results show that the number of people killed or injured are not good predictors for estimating the number of teenaged actors in gun violence, as it would be too difficult to predict something as unpredictable as gun violence.
 
 ### Number of people killed in relation to the different age groups of actors.
 
@@ -264,23 +263,30 @@ summary(fit0)
 fit1 = lm(n_killed~n_adult_part+n_teen_part+n_child_part, data=data_clean)
 summary(fit1)
 
-# UPDATE THIS COMMENT LATER:   Results to be interpreted in a similar manner as ABOVE
 
 ```
+Results show an Adjusted R-squared of 0.03338, an F-statistic of 124.6 with a p-value < 2.2e-16.
+This can be interpreted that the estimate of the mean number of teen actors is 0.174971 when n_adult_part, n_teen_part, and n_child_part are both 0. This means that 0.174971 of the average person is being killed when the number of child, teen, and adult actors are both equal to 0. This doesn't make sense since you'd imagine the estimate to be 0 when the covariates are 0.
+The 0.107809 estimate for n_adult_part means that the mean value of people killed would be estimated to increase by 0.107809 if n_adult_part increased by 1 unit, holding all other covariates constant.
+The 0.031719 estimate for n_teen_part means that the mean value of people killed would be estimated to increase by 0.031719 if n_teen_part increased by 1 unit, holding all other covariates constant.
+The 0.155926 estimate for n_child_part means that the mean value of people killed would be estimated to increase by 0.155926 if n_child_part increased by 1, holding all other covariates constant.
+This was a surprising insight that I didn't expect to make, but judging from this fit, child actors involved in gun violence incidents are more likely to kill someone than adults or teens, with teens having the lowest estimate.
+However, the correlation isn't strong enough to draw statistically significant conclusions from this model, as the Adjusted R squared is only 3.3%.
 
 ### The number of actors arrested, in relation to the age of the actor, disregarding children.
 
 ```{r}
 fit2 = lm(n_part_arrested~n_adult_part+n_teen_part, data=data_clean)
 summary(fit2)
-#Results show an Adjusted R-squared of 0.1643, an F-statistic of 1056 with a p-value < 2.2e-16
-#This can be interpreted that the estimate of the mean number of teen actors is -0.012580 when n_adult_part and n_teen_part are both 0. This means that 0.012580 of the average person is being unincarcerated when the number of teen and adult actors are both equal to 0. This doesn't make sense since you'd imagine the estimate to be 0 when the covariates are 0.
-#The 0.330548 estimate for n_adult_part means that the mean value of actors arreseted would be estimated to increase by 0.330548 if n_adult_part increased by 1 unit, holding all other covariates constant.
-#The 0.393224 estimate for n_teen_part means that the mean value of arrested actors would be estimated to increase by 0.393224 if n_teen_part increased by 1 unit, holding all other covariates constant.
-#The correlation isn't strong enough to draw meaningful conclusions from this model, as the R squared is only 16%
 
 
 ```
+Results show an Adjusted R-squared of 0.1643, an F-statistic of 1056 with a p-value < 2.2e-16.
+This can be interpreted that the estimate of the mean number of teen actors is -0.012580 when n_adult_part and n_teen_part are both 0. This means that 0.012580 of the average person is being unincarcerated when the number of teen and adult actors are both equal to 0. This doesn't make sense since you'd imagine the estimate to be 0 when the covariates are 0.
+The 0.330548 estimate for n_adult_part means that the mean value of actors arreseted would be estimated to increase by 0.330548 if n_adult_part increased by 1 unit, holding all other covariates constant.
+The 0.393224 estimate for n_teen_part means that the mean value of arrested actors would be estimated to increase by 0.393224 if n_teen_part increased by 1 unit, holding all other covariates constant.
+The correlation isn't strong enough to draw statistically significant conclusions from this model, as the Adjusted R squared is only 16%.
+
 
 ### The number of actors killed vs the number of victims killed
 
@@ -288,15 +294,16 @@ summary(fit2)
 fit3 = lm(n_part_killed~n_adult_part+n_teen_part+n_killed, data=data_clean)
 summary(fit3)
 
-#Results show an Adjusted R-squared of 0.9963, an F-statistic of 9.562e+05 with a p-value < 2.2e-16
-#This can be interpreted that the estimate of the mean number of actors who've died is 0.0011 when n_adult_part, n_teen_part, and n_killed are both 0 (though it's not 0, it's very close). This means that 0.0011 of the average actor is dead when the number of teen, adult actors, and number killed are all equal to 0. 
-#The 0.0002468 estimate for n_adult_part means that the mean value of actors killed would be estimated to increase by 0.0002468 if n_adult_part increased by 1 unit, holding all other covariates constant.
-#The -0.0009959 estimate for n_teen_part means that the mean value of dead actors would be estimated to increase by -0.0009959 if n_teen_part increased by 1 unit, holding all other covariates constant (this doesn't make much sense as the opposite of dying is coming back to life, which goes to show that these weren't good predictors).
-# The 0.9925804 estimate for n_killed means that the mean value of dead actors would increase by almost 1 when n_killed increases by 1 unit, holding all covariates constant.
-#The correlation is strong enough, with an adjusted R-squared of 0.9963, but this dataset never clarified whether or not the actor gets added to this count whenever he/she dies. It seems like that might be the case due to the R-squared value being almost 1.
-
 
 ```
+
+Results show an Adjusted R-squared of 0.9963, an F-statistic of 9.562e+05 with a p-value < 2.2e-16.
+This can be interpreted that the estimate of the mean number of actors who've died is 0.0011 when n_adult_part, n_teen_part, and n_killed are both 0 (though it's not 0, it's very close). This means that 0.0011 of the average actor is dead when the number of teen, adult actors, and number killed are all equal to 0. 
+The 0.0002468 estimate for n_adult_part means that the mean value of actors killed would be estimated to increase by 0.0002468 if n_adult_part increased by 1 unit, holding all other covariates constant.
+The -0.0009959 estimate for n_teen_part means that the mean value of dead actors would be estimated to increase by -0.0009959 if n_teen_part increased by 1 unit, holding all other covariates constant (this doesn't make much sense as the opposite of dying is coming back to life, which goes to show that these weren't good predictors).
+The 0.9925804 estimate for n_killed means that the mean value of dead actors would increase by almost 1 when n_killed increases by 1 unit, holding all covariates constant.
+The correlation is strong enough, with an adjusted R-squared of 0.9963, but this dataset never clarified whether or not the actor gets added to this count whenever he/she dies. It seems like that might be the case due to the Adjusted R-squared value being almost 1.
+
 
 ## Results
 
@@ -306,6 +313,14 @@ summary(fit3)
   <br />- Summer months have a higher rate of gun violence incidences as well as January specifically  
   <br />- Chicago is a hot spot for violence and carries Illinois into the top state with the most incidences  
   <br />- 2018 was on track to surpass 2017 in number of incidences  
+
+
+## Reflections
+### Aashwin Lamsal
+I enjoyed working with all my group mates on this project, the only thing that I would want to change would probably be the data set itself, since this data set didn't lend itself to predictive analysis very well, being able to predict demographic or geographic changes would have made this project more interesting. My personal contributions to the project were the fitted linear models, and 1-2 of the visualizations of the data. I also worked closely with Eric, especially in the beginning of the project, so we both were bouncing ideas of each other. This work was also placed into the presentation by myself.
+
+### Ethan Wanlass
+The part I did in this project was exploration of the number of incidents both in for total number and per capita. I also found and cleaned the population data set from the U.S. Bureau. Furthermore, I put this work into the presentation. 
 
 
 
