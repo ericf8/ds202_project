@@ -225,7 +225,23 @@ summary(fit3)
 
 # Give each section a header
 
-# Move results and conclusion over from slides to below regressions
+# Move results and conclusion over from slides to below regressions DONE
+
+  EXPOUND UPON THE FOLLOWING:
+  This given dataset was not geared towards predictive modeling, but the variables themselves are interesting and easy to draw insights from.
+Through the geographic information, we can tell that there are some areas with much more violence than others.
+Demographic information showed that actors were, typically, in their late teens to mid twenties, and male.
+Teen actors are more likely to be arrested than killed by police.
+We did not have any data on the ethnicities of the people who were killed, that could lead to further insights.
+Summer months are the most active for gun violence.
+High rates of incidents occurring in January as well.
+Illinois is the state with the most incidents of gun violence, with Chicago being the most violent city.
+This insight was made after the sampling of the data, beforehand, Illinois was 3rd, trailing Texas and California
+Most incidents of gun violence ARE NOT MASS SHOOTINGS!
+A typical incident doesn’t even have deaths involved.
+Gun violence is on the rise.
+2018’s subtotal shows around 13,000 incidents had occurred, and we only had information for up until March.
+
 
 
 
