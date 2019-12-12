@@ -72,7 +72,7 @@ head(population)
 
 unused_names = c("United States","Northeast Region","South Region","West Region", "Puerto Rico")
 clean_population = population  %>% select(NAME,POPESTIMATE2018) %>% 
-  filter(NAME %in% data_clean$state) %>% droplevels(clean_population$Name)
+  filter(NAME %in% data_clean$state)%>% droplevels(clean_population$Name)
 
 colnames(clean_population)[1] = "state"
 str(clean_population)
