@@ -63,8 +63,8 @@ data_clean$month <- as.numeric(data_clean$month)
 
 ### Data Visualization
 
-```{r}
-
+## Heatmap
+```{r, echo=FALSE}
 library(tidyverse)
 library(ggplot2)
 library(ggmap)
@@ -92,58 +92,52 @@ data_clean.map = data_clean.map + theme_bw()
 ggsave(filename = "D:\\Documents\\ds202_project\\data_clean.png") #change this to something else for your own local directories
 
 
+
+
+```
+
+### Pairplot/Correlation Matrix
+```{r}
+
+library(tidyverse)
+library(ggplot2)
+library(ggmap)
+library(sf)
+library(mapview)
+library(RColorBrewer)
+
 ## Other Plots ( still need to order them )
 
 # Scatter Pair plot:
 
 pairs(data_clean[ ,7:18], pch = 19, lower.panel = NULL)
+```
 
-
-
-
-# Bar chart: state x age ?
-
-
-
+### Actor age vs. The sum of number killed between 2013 and 2018
+```{r, echo=FALSE}
 # Histogram: part1_age x sum(n_killed)
 
 ggplot(data_clean, aes(x = part1_age, y = sum(n_killed))) + geom_histogram(stat = "identity", fill = "blue") + labs(x="Ages of Actors", y = "Total Number Killed", title = "Total Killed by Actors of Each Particular Age (2013-2018)")
 
- 
+```
+
+### Distribution of Gun Violence Incidents over Time (2013-2018)
+```{r, echo=FALSE}
 
 # Histogram: year
 
 ggplot(data_clean, aes(x = year)) + geom_histogram(stat = "count",  fill = "#42a14b") + labs(x = "Year", y = "Frequency", title = "Distribution of Incidents by Year")
-
-
+```
+### Distribution of Gun violence incidents over Time (months)
+```{r, echo=FALSE}
 # Histogram: month
 
 ggplot(data_clean, aes(x = month)) + geom_histogram(stat = "count", fill = "#42a14b") + labs(x = "Month", y = "Frequency", title = "Distribution of Incidents by Month") + ylim(0, 1200)
-
-
-
-
-
-
-
-# Line graph: date x n_killed grouped by state?
-# Time series??
-# First we subset the dataframe, one for each year
-
-
-
-
-# The grouping isn't ideal here, needs fixing
-
-
-
 ```
 
+### Distributions of actors who were arrested vs. actors who were killed, Nationally compared to Chicago, IL
 
-
-## Visualizations cont.
-
-```{r}
+```{r, echo = FALSE}
 #National
 ggplot(data_clean, aes(x = month, y = n_part_arrested)) + geom_bar(stat= "identity", fill = "#FB8B24") + labs(title = "Number of Actors Arrested by Month in the U.S.", x = "Month", y = "Number of Actors Arrested") + ylim(0, 650)
 ggplot(data_clean, aes(x = month, y = n_part_killed)) + geom_bar(stat= "identity", fill = "#FB8B24") + labs(title = "Number of Actors Killed by Month in the U.S.", x = "Month", y = "Number of Actors Killed") + ylim(0, 650)
@@ -154,7 +148,6 @@ data_clean_chi = subset(data_clean, data_clean$city_or_county == "Chicago")
 ggplot(data_clean_chi, aes(x = month, y = n_part_arrested)) + geom_bar(stat="identity", fill = "#05668D") + ylim(0, 25) + labs(title = "Number of Actors Arrested by Month in Chicago", x = "Month", y = "Number of Actors Arrested")
 
 ggplot(data_clean_chi, aes(x = month, y = n_part_killed)) + geom_bar(stat="identity", fill = "#05668D") + ylim(0, 25) + labs(title = "Number of Actors Killed by Month in Chicago", x = "Month", y = "Number of Actors Killed")
-
 
 ```
 
@@ -224,11 +217,11 @@ summary(fit3)
               
 ######################################################################
 
-# Put each plot in a separate R block
+# Put each plot in a separate R block DONE
 
-# Title each plot with ### "TItle"
+# Title each plot with ### "TItle" DONE
 
-# Each plot block needs echo=FALSE
+# Each plot block needs echo=FALSE DONE
 
 # Give each section a header
 
